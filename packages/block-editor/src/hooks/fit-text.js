@@ -3,7 +3,7 @@
  */
 import { addFilter } from '@wordpress/hooks';
 import { hasBlockSupport } from '@wordpress/blocks';
-import { useEffect, useCallback } from '@wordpress/element';
+import { useEffect, useCallback, useState } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 
 const EMPTY_OBJECT = {};
@@ -14,6 +14,8 @@ const EMPTY_OBJECT = {};
 import { optimizeFitText } from '../utils/fit-text-utils';
 import { store as blockEditorStore } from '../store';
 import { useBlockElement } from '../components/block-list/use-block-props/use-block-refs';
+import InspectorControls from '../components/inspector-controls';
+import FitTextSizeChecker from '../components/fit-text-size-checker';
 
 export const FIT_TEXT_SUPPORT_KEY = 'typography.fitText';
 
@@ -55,6 +57,7 @@ function addAttributes( settings ) {
  * @param {string}   props.clientId Block client ID.
  */
 function useFitText( { fitText, name, clientId } ) {
+	const [ fontSize, setFontSize ] = useState( null );
 	const hasFitTextSupport = hasBlockSupport( name, FIT_TEXT_SUPPORT_KEY );
 	const blockElement = useBlockElement( clientId );
 
@@ -91,15 +94,16 @@ function useFitText( { fitText, name, clientId } ) {
 
 		const blockSelector = `#block-${ clientId }`;
 
-		const applyFontSize = ( fontSize ) => {
-			if ( fontSize === 0 ) {
+		const applyFontSizeStyle = ( size ) => {
+			if ( size === 0 ) {
 				styleElement.textContent = '';
 			} else {
-				styleElement.textContent = `${ blockSelector } { font-size: ${ fontSize }px !important; }`;
+				styleElement.textContent = `${ blockSelector } { font-size: ${ size }px !important; }`;
 			}
 		};
 
-		optimizeFitText( blockElement, applyFontSize );
+		const optimalSize = optimizeFitText( blockElement, applyFontSizeStyle );
+		setFontSize( optimalSize );
 	}, [ blockElement, clientId, hasFitTextSupport, fitText ] );
 
 	useEffect( () => {
@@ -199,6 +203,8 @@ function useFitText( { fitText, name, clientId } ) {
 		blockElement,
 		hasFitTextSupport,
 	] );
+
+	return { fontSize };
 }
 
 /**
@@ -233,14 +239,12 @@ function addSaveProps( props, blockType, attributes ) {
 /**
  * Override props applied to the block element in the editor.
  *
- * @param {Object}  props          Component props including block attributes.
- * @param {string}  props.name     Block name.
- * @param {boolean} props.fitText  Whether fit text is enabled.
- * @param {string}  props.clientId Block client ID.
+ * @param {Object}  props         Component props including block attributes.
+ * @param {string}  props.name    Block name.
+ * @param {boolean} props.fitText Whether fit text is enabled.
  * @return {Object} Filtered props applied to the block element.
  */
-function useBlockProps( { name, fitText, clientId } ) {
-	useFitText( { fitText, name, clientId } );
+function useBlockProps( { name, fitText } ) {
 	if ( ! fitText || ! hasBlockSupport( name, FIT_TEXT_SUPPORT_KEY ) ) {
 		return {};
 	}
@@ -259,10 +263,35 @@ const hasFitTextSupport = ( blockNameOrType ) => {
 	return hasBlockSupport( blockNameOrType, FIT_TEXT_SUPPORT_KEY );
 };
 
+/**
+ * Inspector control component for fit text.
+ * Displays a warning if the computed font size is too small.
+ *
+ * @param {Object}  props          Component props.
+ * @param {string}  props.clientId Block client ID.
+ * @param {string}  props.name     Block name.
+ * @param {boolean} props.fitText  Whether fit text is enabled.
+ *
+ * @return {Element|null} Inspector controls element or null.
+ */
+function FitTextEdit( { clientId, name, fitText } ) {
+	const { fontSize } = useFitText( { fitText, name, clientId } );
+
+	if ( ! fitText || ! hasBlockSupport( name, FIT_TEXT_SUPPORT_KEY ) ) {
+		return null;
+	}
+
+	return (
+		<InspectorControls group="styles">
+			<FitTextSizeChecker fontSize={ fontSize } />
+		</InspectorControls>
+	);
+}
+
 export default {
 	useBlockProps,
 	addSaveProps,
 	attributeKeys: [ 'fitText' ],
 	hasSupport: hasFitTextSupport,
-	edit: () => null,
+	edit: FitTextEdit,
 };
