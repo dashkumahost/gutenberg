@@ -16,13 +16,16 @@ import { sidebars } from './constants';
 const { Tabs } = unlock( componentsPrivateApis );
 
 const SidebarHeader = ( _, ref ) => {
-	const { documentLabel } = useSelect( ( select ) => {
-		const { getPostTypeLabel } = select( editorStore );
+	const { documentLabel, isAttachment } = useSelect( ( select ) => {
+		const { getPostTypeLabel, getCurrentPostType } = select( editorStore );
 
 		return {
 			documentLabel:
 				// translators: Default label for the Document sidebar tab, not selected.
 				getPostTypeLabel() || _x( 'Document', 'noun, panel' ),
+			isAttachment:
+				getCurrentPostType() === 'attachment' &&
+				window?.__experimentalMediaEditor,
 		};
 	}, [] );
 
@@ -35,14 +38,16 @@ const SidebarHeader = ( _, ref ) => {
 			>
 				{ documentLabel }
 			</Tabs.Tab>
-			<Tabs.Tab
-				tabId={ sidebars.block }
-				// Used for focus management in the SettingsSidebar component.
-				data-tab-id={ sidebars.block }
-			>
-				{ /* translators: Text label for the Block Settings Sidebar tab. */ }
-				{ __( 'Block' ) }
-			</Tabs.Tab>
+			{ ! isAttachment && (
+				<Tabs.Tab
+					tabId={ sidebars.block }
+					// Used for focus management in the SettingsSidebar component.
+					data-tab-id={ sidebars.block }
+				>
+					{ /* translators: Text label for the Block Settings Sidebar tab. */ }
+					{ __( 'Block' ) }
+				</Tabs.Tab>
+			) }
 		</Tabs.TabList>
 	);
 };
