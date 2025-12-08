@@ -280,7 +280,6 @@ module.exports = {
 						'BaseControl',
 						'CheckboxControl',
 						'ComboboxControl',
-						'DimensionControl',
 						'FocalPointPicker',
 						'RangeControl',
 						'SearchControl',
@@ -304,7 +303,7 @@ module.exports = {
 						'Button',
 						'ComboboxControl',
 						'CustomSelectControl',
-						'DimensionControl',
+
 						'FontAppearanceControl',
 						'FontFamilyControl',
 						'FontSizePicker',
