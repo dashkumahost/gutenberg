@@ -14,6 +14,7 @@ import {
 	type SyncConfig,
 	Y,
 } from '@wordpress/sync';
+import { dispatch, select, subscribe } from '@wordpress/data';
 
 /**
  * Internal dependencies
@@ -39,6 +40,7 @@ import {
 	type YMapRecord,
 	type YMapWrap,
 } from './crdt-utils';
+import { STORE_NAME } from '../name';
 
 // Changes that can be applied to a post entity record.
 export type PostChanges = Partial< Post > & {
@@ -66,6 +68,8 @@ export interface YPostRecord extends YMapRecord {
 	tags: number[];
 	template: string;
 	title: string;
+	enforcedMode: string;
+	enforcedModeOwner: number;
 }
 
 // Properties that are allowed to be synced for a post.
@@ -370,6 +374,21 @@ export function getPostChangesFromCRDTDoc(
 					);
 				}
 
+				case 'enforcedModeOwner': {
+					// @ts-ignore
+					const { getCurrentUser } = select( STORE_NAME );
+
+					console.log( currentValue, newValue );
+
+					if ( ! currentValue && getCurrentUser().id !== newValue ) {
+						console.log( 'Set the collaborator mode to view' );
+						// @ts-ignore
+						dispatch( 'core/editor').setCollaboratorMode( 'view' );
+					}
+
+					return true;
+				}
+
 				// Add support for additional data types here.
 
 				default: {
@@ -379,6 +398,15 @@ export function getPostChangesFromCRDTDoc(
 		} )
 	);
 
+	// @ts-ignore
+	if ( editedRecord.enforcedModeOwner && ! ymap.has( 'enforcedModeOwner' ) ) {
+		console.log( 'Reset the collaborator mode' );
+		// @ts-ignore
+		dispatch( 'core/editor').setCollaboratorMode( 'edit' );
+		changes.enforcedModeOwner = undefined;
+		changes.enforcedMode = undefined;
+	}
+
 	// Meta changes must be merged with the edited record since not all meta
 	// properties are synced.
 	if ( 'object' === typeof changes.meta ) {
@@ -387,6 +415,8 @@ export function getPostChangesFromCRDTDoc(
 			...allowedMetaChanges,
 		};
 	}
+
+	console.log( changes );
 
 	return changes;
 }
