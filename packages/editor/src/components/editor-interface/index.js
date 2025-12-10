@@ -162,7 +162,7 @@ export default function EditorInterface( {
 						<EditorNotices />
 					) }
 
-					{ isAttachment && <MediaPreview /> }
+					{ isAttachment && <MediaPreview { ...iframeProps } /> }
 					{ ! isAttachment && (
 						<>
 							{ shouldShowStylesCanvas ? (
