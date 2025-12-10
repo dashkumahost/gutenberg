@@ -21,7 +21,7 @@
 			"type": "object",
 			"properties": {
 				"appearanceTools": {
-					"description": "Setting that enables the following UI tools:\n\n- background: backgroundImage, backgroundSize\n- border: color, radius, style, width\n- color: link, heading, button, caption\n- dimensions: aspectRatio, minHeight, width\n- position: sticky\n- spacing: blockGap, margin, padding\n- typography: lineHeight",
+					"description": "Setting that enables the following UI tools:\n\n- background: backgroundImage, backgroundSize\n- border: color, radius, style, width\n- color: link, heading, button, caption, paragraph\n- dimensions: aspectRatio, minHeight, width\n- position: sticky\n- spacing: blockGap, margin, padding\n- typography: lineHeight",
 					"type": "boolean",
 					"default": false
 				}
@@ -230,6 +230,11 @@
 						},
 						"heading": {
 							"description": "Allow users to set heading colors in a block.",
+							"type": "boolean",
+							"default": true
+						},
+						"paragraph": {
+							"description": "Allow users to set paragraph colors in a block.",
 							"type": "boolean",
 							"default": true
 						},
@@ -1882,6 +1887,9 @@
 					]
 				},
 				"heading": {
+					"$ref": "#/definitions/stylesPropertiesComplete"
+				},
+				"paragraph": {
 					"$ref": "#/definitions/stylesPropertiesComplete"
 				},
 				"h1": {
