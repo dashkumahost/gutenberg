@@ -17,6 +17,7 @@
 - DataForm: add support for `min`/`max` and `minLength`/`maxLength` validation for relevant controls. [#73465](https://github.com/WordPress/gutenberg/pull/73465)
 - Field API: display formats for `number` and `integer` types. [#73644](https://github.com/WordPress/gutenberg/pull/73644)
 - DataViews: Update padding to 24px for consistency. [#73334](https://github.com/WordPress/gutenberg/pull/73334)
+- Converted package to a compliant dual CJS/ESM module ([#73822](https://github.com/WordPress/gutenberg/pull/73822))
 
 ## 11.0.0 (2025-11-26)
 
