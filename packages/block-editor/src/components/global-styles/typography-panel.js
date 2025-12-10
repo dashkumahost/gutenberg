@@ -180,7 +180,6 @@ export default function TypographyPanel( {
 	settings,
 	panelId,
 	defaultControls = DEFAULT_CONTROLS,
-	fitText = false,
 } ) {
 	const decodeValue = ( rawValue ) =>
 		getValueFromVariable( { settings }, '', rawValue );
@@ -449,7 +448,7 @@ export default function TypographyPanel( {
 					/>
 				</ToolsPanelItem>
 			) }
-			{ hasFontSizeEnabled && ! fitText && (
+			{ hasFontSizeEnabled && (
 				<ToolsPanelItem
 					label={ __( 'Size' ) }
 					hasValue={ hasFontSize }
