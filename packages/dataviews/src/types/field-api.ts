@@ -274,6 +274,11 @@ export type Field< Item > = {
 	 * Display format configuration for fields.
 	 */
 	format?: FormatDate | FormatNumber | FormatInteger;
+
+	/**
+	 * Callback used to format the value of the field for display.
+	 */
+	formatValue?: ( item: Item, field: NormalizedField< Item > ) => any;
 };
 
 /**
@@ -331,6 +336,7 @@ type NormalizedFieldBase< Item > = Omit< Field< Item >, 'Edit' | 'isValid' > & {
 	filterBy: Required< FilterByConfig > | false;
 	readOnly: boolean;
 	format: {};
+	formatValue: ( value: any, field: NormalizedField< Item > ) => any;
 };
 
 export type NormalizedFieldDate< Item > = NormalizedFieldBase< Item > & {

@@ -6,27 +6,21 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import type {
-	DataViewRenderFieldProps,
-	NormalizedField,
-	SortDirection,
-} from '../types';
+import type { NormalizedField, SortDirection } from '../types';
 import type { FieldType } from '../types/private';
-import RenderFromElements from './utils/render-from-elements';
 import { OPERATOR_IS, OPERATOR_IS_NOT } from '../constants';
 import isValidElements from './utils/is-valid-elements';
 import isValidRequiredForBool from './utils/is-valid-required-for-bool';
+import render from './utils/render-default';
 
-function render( { item, field }: DataViewRenderFieldProps< any > ) {
-	if ( field.hasElements ) {
-		return <RenderFromElements item={ item } field={ field } />;
-	}
+function formatValue( item: any, field: NormalizedField< any > ) {
+	const value = field.getValue( { item } );
 
-	if ( field.getValue( { item } ) === true ) {
+	if ( value === true ) {
 		return __( 'True' );
 	}
 
-	if ( field.getValue( { item } ) === false ) {
+	if ( value === false ) {
 		return __( 'False' );
 	}
 
@@ -78,4 +72,5 @@ export default {
 	defaultOperators: [ OPERATOR_IS, OPERATOR_IS_NOT ],
 	validOperators: [ OPERATOR_IS, OPERATOR_IS_NOT ],
 	getFormat: () => ( {} ),
+	formatValue,
 } satisfies FieldType< any >;

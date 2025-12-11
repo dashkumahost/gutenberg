@@ -1,9 +1,8 @@
 /**
  * Internal dependencies
  */
-import type { DataViewRenderFieldProps, SortDirection } from '../types';
+import type { NormalizedField, SortDirection } from '../types';
 import type { FieldType } from '../types/private';
-import RenderFromElements from './utils/render-from-elements';
 import parseDateTime from './utils/parse-date-time';
 import isValidElements from './utils/is-valid-elements';
 import {
@@ -17,12 +16,9 @@ import {
 	OPERATOR_OVER,
 } from '../constants';
 import isValidRequired from './utils/is-valid-required';
+import render from './utils/render-default';
 
-function render( { item, field }: DataViewRenderFieldProps< any > ) {
-	if ( field.elements ) {
-		return <RenderFromElements item={ item } field={ field } />;
-	}
-
+function formatValue< Item >( item: Item, field: NormalizedField< Item > ) {
 	const value = field.getValue( { item } );
 	if ( [ '', undefined, null ].includes( value ) ) {
 		return null;
@@ -71,6 +67,7 @@ export default {
 		OPERATOR_OVER,
 	],
 	getFormat: () => ( {} ),
+	formatValue,
 	validate: {
 		required: isValidRequired,
 		elements: isValidElements,

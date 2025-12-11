@@ -28,6 +28,7 @@ export type FieldType< Item > = Pick<
 		| Required< FormatDate >
 		| Required< FormatNumber >
 		| Required< FormatInteger >;
+	formatValue: ( value: any, field: NormalizedField< Item > ) => any;
 	validate: {
 		required?: Validator< Item >;
 		elements?: Validator< Item >;

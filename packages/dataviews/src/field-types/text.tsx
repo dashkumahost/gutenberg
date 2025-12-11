@@ -20,6 +20,7 @@ import isValidMinLength from './utils/is-valid-min-length';
 import isValidMaxLength from './utils/is-valid-max-length';
 import isValidPattern from './utils/is-valid-pattern';
 import isValidElements from './utils/is-valid-elements';
+import formatValue from './utils/format-value';
 
 export default {
 	type: 'text',
@@ -43,6 +44,7 @@ export default {
 		OPERATOR_IS_NOT_ALL,
 	],
 	getFormat: () => ( {} ),
+	formatValue,
 	validate: {
 		required: isValidRequired,
 		pattern: isValidPattern,
