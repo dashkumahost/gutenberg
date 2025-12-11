@@ -1,11 +1,4 @@
-/**
- * External dependencies
- */
 import type { Meta, StoryObj } from '@storybook/react';
-
-/**
- * Internal dependencies
- */
 import { Stack } from '../index';
 import { Box } from '../../box';
 
