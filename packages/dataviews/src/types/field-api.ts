@@ -273,7 +273,7 @@ export type Field< Item > = {
 	/**
 	 * Display format configuration for fields.
 	 */
-	format?: FormatDate | FormatNumber | FormatInteger;
+	format?: FormatDate | FormatDatetime | FormatNumber | FormatInteger;
 
 	/**
 	 * Callback used to format the value of the field for display.
@@ -284,7 +284,7 @@ export type Field< Item > = {
 /**
  * Format for date fields:
  *
- * - date: the format string (e.g., 'F j, Y' for WordPress default format like 'March 10, 2023')
+ * - date: the format string (e.g., 'F j, Y' for 'March 10, 2023')
  * - weekStartsOn: to specify the first day of the week ('sunday', 'monday', etc.).
  *
  * If not provided, defaults to WordPress date format settings.
@@ -295,6 +295,18 @@ export type FormatDate = {
 };
 export type DayNumber = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
+/**
+ * Format for datetime fields:
+ *
+ * - datetime: the format string string (e.g., "M j, Y g:i a" for "Jan 1, 2021 2:30 pm").
+ * - weekStartsOn: to specify the first day of the week ('sunday', 'monday', etc.).
+ *
+ * If not provided, defaults to WordPress date format settings.
+ */
+export type FormatDatetime = {
+	datetime?: string;
+	weekStartsOn?: DayNumber;
+};
 /**
  * Format for number fields:
  *
@@ -341,6 +353,7 @@ export type NormalizedField< Item > = Omit<
 	format:
 		| {}
 		| Required< FormatDate >
+		| Required< FormatDatetime >
 		| Required< FormatInteger >
 		| Required< FormatNumber >;
 	getValueFormatted: ( value: any, field: NormalizedField< Item > ) => any;
