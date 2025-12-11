@@ -6,7 +6,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import type { Field, FormatNumber, NormalizedField } from '../types';
+import type { FormatNumber, NormalizedField } from '../types';
 import type { FieldType } from '../types/private';
 import {
 	OPERATOR_IS,
@@ -28,29 +28,11 @@ import isValidMax from './utils/is-valid-max';
 import isValidElements from './utils/is-valid-elements';
 import render from './utils/render-default';
 
-function getFormat< Item >( field: Field< Item > ): Required< FormatNumber > {
-	const fieldFormat = field.format as FormatNumber | undefined;
-	return {
-		separatorThousand:
-			fieldFormat?.separatorThousand !== undefined &&
-			typeof fieldFormat.separatorThousand === 'string'
-				? fieldFormat.separatorThousand
-				: ',',
-		separatorDecimal:
-			fieldFormat?.separatorDecimal !== undefined &&
-			typeof fieldFormat.separatorDecimal === 'string'
-				? fieldFormat.separatorDecimal
-				: '.',
-		decimals:
-			fieldFormat?.decimals !== undefined &&
-			typeof fieldFormat.decimals === 'number' &&
-			fieldFormat.decimals >= 0 &&
-			fieldFormat.decimals <= 100 &&
-			Number.isInteger( fieldFormat.decimals )
-				? fieldFormat.decimals
-				: 2,
-	};
-}
+const format = {
+	separatorThousand: ',',
+	separatorDecimal: '.',
+	decimals: 2,
+};
 
 function formatValue< Item >( item: Item, field: NormalizedField< Item > ) {
 	let value = field.getValue( { item } );
@@ -63,14 +45,14 @@ function formatValue< Item >( item: Item, field: NormalizedField< Item > ) {
 		return String( value );
 	}
 
-	let format: Required< FormatNumber >;
+	let formatNumber: Required< FormatNumber >;
 	if ( field.type !== 'number' ) {
-		format = getFormat( field as Field< any > );
+		formatNumber = format;
 	} else {
-		format = field.format as Required< FormatNumber >;
+		formatNumber = field.format as Required< FormatNumber >;
 	}
 
-	const { separatorThousand, separatorDecimal, decimals } = format;
+	const { separatorThousand, separatorDecimal, decimals } = formatNumber;
 	const fixedValue = value.toFixed( decimals );
 	const [ integerPart, decimalPart ] = fixedValue.split( '.' );
 	const formattedInteger = separatorThousand
@@ -126,7 +108,7 @@ export default {
 		OPERATOR_IS_ALL,
 		OPERATOR_IS_NOT_ALL,
 	],
-	getFormat,
+	format,
 	formatValue,
 	validate: {
 		required: isValidRequired,

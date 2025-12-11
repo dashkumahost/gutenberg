@@ -6,12 +6,7 @@ import { dateI18n, getDate, getSettings } from '@wordpress/date';
 /**
  * Internal dependencies
  */
-import type {
-	Field,
-	FormatDate,
-	NormalizedField,
-	SortDirection,
-} from '../types';
+import type { FormatDate, NormalizedField, SortDirection } from '../types';
 import type { FieldType } from '../types/private';
 import isValidElements from './utils/is-valid-elements';
 import {
@@ -24,10 +19,14 @@ import {
 	OPERATOR_IN_THE_PAST,
 	OPERATOR_OVER,
 	OPERATOR_BETWEEN,
-	DAYS_OF_WEEK,
 } from '../constants';
 import isValidRequired from './utils/is-valid-required';
 import render from './utils/render-default';
+
+const format = {
+	date: getSettings().formats.date,
+	weekStartsOn: getSettings().l10n.startOfWeek,
+};
 
 function formatValue< Item >( item: Item, field: NormalizedField< Item > ) {
 	const value = field.getValue( { item } );
@@ -35,30 +34,14 @@ function formatValue< Item >( item: Item, field: NormalizedField< Item > ) {
 		return '';
 	}
 
-	let format: Required< FormatDate >;
+	let formatDate: Required< FormatDate >;
 	if ( field.type !== 'date' ) {
-		format = getFormat( {} as Field< any > );
+		formatDate = format;
 	} else {
-		format = field.format as Required< FormatDate >;
+		formatDate = field.format as Required< FormatDate >;
 	}
 
-	return dateI18n( format.date, getDate( value ) );
-}
-
-function getFormat< Item >( field: Field< Item > ): Required< FormatDate > {
-	const fieldFormat = field.format as FormatDate | undefined;
-	return {
-		date:
-			fieldFormat?.date !== undefined &&
-			typeof fieldFormat.date === 'string'
-				? fieldFormat.date
-				: getSettings().formats.date,
-		weekStartsOn:
-			fieldFormat?.weekStartsOn !== undefined &&
-			DAYS_OF_WEEK.includes( fieldFormat?.weekStartsOn )
-				? fieldFormat.weekStartsOn
-				: getSettings().l10n.startOfWeek,
-	};
+	return dateI18n( formatDate.date, getDate( value ) );
 }
 
 const sort = ( a: any, b: any, direction: SortDirection ) => {
@@ -97,7 +80,7 @@ export default {
 		OPERATOR_OVER,
 		OPERATOR_BETWEEN,
 	],
-	getFormat,
+	format,
 	formatValue,
 	validate: {
 		required: isValidRequired,

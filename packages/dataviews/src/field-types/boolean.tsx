@@ -12,7 +12,6 @@ import { OPERATOR_IS, OPERATOR_IS_NOT } from '../constants';
 import isValidElements from './utils/is-valid-elements';
 import isValidRequiredForBool from './utils/is-valid-required-for-bool';
 import render from './utils/render-default';
-import getFormat from './utils/get-format-empty';
 
 function formatValue( item: any, field: NormalizedField< any > ) {
 	const value = field.getValue( { item } );
@@ -72,6 +71,6 @@ export default {
 	enableGlobalSearch: false,
 	defaultOperators: [ OPERATOR_IS, OPERATOR_IS_NOT ],
 	validOperators: [ OPERATOR_IS, OPERATOR_IS_NOT ],
-	getFormat,
+	format: {},
 	formatValue,
 } satisfies FieldType< any >;

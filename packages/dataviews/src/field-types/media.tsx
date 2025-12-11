@@ -3,7 +3,6 @@
  */
 import type { FieldType } from '../types/private';
 import formatValue from './utils/format-value';
-import getFormat from './utils/get-format-empty';
 
 export default {
 	type: 'media',
@@ -14,7 +13,7 @@ export default {
 	enableGlobalSearch: false,
 	defaultOperators: [],
 	validOperators: [],
-	getFormat,
+	format: {},
 	formatValue,
 	// cannot validate any constraint, so
 	// the only available validation for the field author

@@ -8,7 +8,6 @@ import isValidMaxLength from './utils/is-valid-max-length';
 import isValidPattern from './utils/is-valid-pattern';
 import isValidElements from './utils/is-valid-elements';
 import render from './utils/render-default';
-import getFormat from './utils/get-format-empty';
 
 export default {
 	type: 'password',
@@ -19,7 +18,7 @@ export default {
 	enableGlobalSearch: false,
 	defaultOperators: [],
 	validOperators: [],
-	getFormat,
+	format: {},
 	formatValue: ( item, field ) =>
 		field.getValue( { item } ) ? '••••••••' : '',
 	validate: {

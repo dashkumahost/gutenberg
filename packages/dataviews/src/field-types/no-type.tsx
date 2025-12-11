@@ -11,7 +11,6 @@ import sortNumber from './utils/sort-number';
 import isValidRequired from './utils/is-valid-required';
 import isValidElements from './utils/is-valid-elements';
 import formatValue from './utils/format-value';
-import getFormat from './utils/get-format-empty';
 
 const sort = ( a: any, b: any, direction: SortDirection ) => {
 	if ( typeof a === 'number' && typeof b === 'number' ) {
@@ -30,7 +29,7 @@ export default {
 	enableGlobalSearch: false,
 	defaultOperators: [ OPERATOR_IS, OPERATOR_IS_NOT ],
 	validOperators: getAllOperatorNames(),
-	getFormat,
+	format: {},
 	formatValue,
 	validate: {
 		required: isValidRequired,

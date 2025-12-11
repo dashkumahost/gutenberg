@@ -3,7 +3,6 @@
  */
 import type {
 	CustomValidator,
-	Field,
 	FormatDate,
 	FormatInteger,
 	FormatNumber,
@@ -21,13 +20,7 @@ export type FieldType< Item > = Pick<
 	Edit: string | null;
 	validOperators: Operator[];
 	defaultOperators: Operator[];
-	getFormat: (
-		field: Field< Item >
-	) =>
-		| Record< string, any >
-		| Required< FormatDate >
-		| Required< FormatNumber >
-		| Required< FormatInteger >;
+	format: FormatDate | FormatNumber | FormatInteger;
 	formatValue: ( value: any, field: NormalizedField< Item > ) => any;
 	validate: {
 		required?: Validator< Item >;

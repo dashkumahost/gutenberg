@@ -27,7 +27,6 @@ import isValidMaxLength from './utils/is-valid-max-length';
 import isValidPattern from './utils/is-valid-pattern';
 import isValidElements from './utils/is-valid-elements';
 import formatValue from './utils/format-value';
-import getFormat from './utils/get-format-empty';
 
 // Email validation regex based on HTML5 spec
 // https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address
@@ -67,7 +66,7 @@ export default {
 		OPERATOR_IS_ALL,
 		OPERATOR_IS_NOT_ALL,
 	],
-	getFormat,
+	format: {},
 	formatValue,
 	validate: {
 		required: isValidRequired,

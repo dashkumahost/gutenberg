@@ -6,7 +6,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import type { Field, FormatInteger, NormalizedField } from '../types';
+import type { FormatInteger, NormalizedField } from '../types';
 import type { FieldType } from '../types/private';
 import {
 	OPERATOR_IS,
@@ -28,16 +28,9 @@ import isValidMax from './utils/is-valid-max';
 import isValidElements from './utils/is-valid-elements';
 import render from './utils/render-default';
 
-function getFormat< Item >( field: Field< Item > ): Required< FormatInteger > {
-	const fieldFormat = field.format as FormatInteger | undefined;
-	return {
-		separatorThousand:
-			fieldFormat?.separatorThousand !== undefined &&
-			typeof fieldFormat.separatorThousand === 'string'
-				? fieldFormat.separatorThousand
-				: ',',
-	};
-}
+const format = {
+	separatorThousand: ',',
+};
 
 function formatValue< Item >( item: Item, field: NormalizedField< Item > ) {
 	let value = field.getValue( { item } );
@@ -50,14 +43,14 @@ function formatValue< Item >( item: Item, field: NormalizedField< Item > ) {
 		return String( value );
 	}
 
-	let format: Required< FormatInteger >;
+	let formatInteger: Required< FormatInteger >;
 	if ( field.type !== 'integer' ) {
-		format = getFormat( field as Field< any > );
+		formatInteger = format;
 	} else {
-		format = field.format as Required< FormatInteger >;
+		formatInteger = field.format as Required< FormatInteger >;
 	}
 
-	const { separatorThousand } = format;
+	const { separatorThousand } = formatInteger;
 	const integerValue = Math.trunc( value );
 	if ( ! separatorThousand ) {
 		return String( integerValue );
@@ -111,7 +104,7 @@ export default {
 		OPERATOR_IS_ALL,
 		OPERATOR_IS_NOT_ALL,
 	],
-	getFormat,
+	format,
 	formatValue,
 	validate: {
 		required: isValidRequired,

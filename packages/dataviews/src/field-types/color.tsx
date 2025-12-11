@@ -27,7 +27,6 @@ import {
 import isValidElements from './utils/is-valid-elements';
 import isValidRequired from './utils/is-valid-required';
 import formatValue from './utils/format-value';
-import getFormat from './utils/get-format-empty';
 
 function render( { item, field }: DataViewRenderFieldProps< any > ) {
 	if ( field.hasElements ) {
@@ -112,7 +111,7 @@ export default {
 		OPERATOR_IS_ANY,
 		OPERATOR_IS_NONE,
 	],
-	getFormat,
+	format: {},
 	formatValue,
 	validate: {
 		required: isValidRequired,
