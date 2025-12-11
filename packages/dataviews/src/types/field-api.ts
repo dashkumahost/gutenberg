@@ -321,7 +321,10 @@ export type FormatInteger = {
 	separatorThousand?: string;
 };
 
-type NormalizedFieldBase< Item > = Omit< Field< Item >, 'Edit' | 'isValid' > & {
+export type NormalizedField< Item > = Omit<
+	Field< Item >,
+	'Edit' | 'isValid'
+> & {
 	label: string;
 	header: string | ReactElement;
 	getValue: ( args: { item: Item } ) => any;
@@ -335,30 +338,12 @@ type NormalizedFieldBase< Item > = Omit< Field< Item >, 'Edit' | 'isValid' > & {
 	enableSorting: boolean;
 	filterBy: Required< FilterByConfig > | false;
 	readOnly: boolean;
-	format: {};
+	format:
+		| Required< FormatDate >
+		| Required< FormatInteger >
+		| Required< FormatNumber >;
 	formatValue: ( value: any, field: NormalizedField< Item > ) => any;
 };
-
-export type NormalizedFieldDate< Item > = NormalizedFieldBase< Item > & {
-	type: 'date';
-	format: Required< FormatDate >;
-};
-
-export type NormalizedFieldNumber< Item > = NormalizedFieldBase< Item > & {
-	type: 'number';
-	format: Required< FormatNumber >;
-};
-
-export type NormalizedFieldInteger< Item > = NormalizedFieldBase< Item > & {
-	type: 'integer';
-	format: Required< FormatInteger >;
-};
-
-export type NormalizedField< Item > =
-	| NormalizedFieldBase< Item >
-	| NormalizedFieldDate< Item >
-	| NormalizedFieldNumber< Item >
-	| NormalizedFieldInteger< Item >;
 
 /**
  * A collection of dataview fields for a data type.
