@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import Textarea from 'react-autosize-textarea';
+import { TextareaAutosize } from 'react-autosize-textarea/lib/TextareaAutosize';
 
 /**
  * WordPress dependencies
@@ -62,7 +62,7 @@ export default function PostTextEditor() {
 			>
 				{ __( 'Type text or HTML' ) }
 			</VisuallyHidden>
-			<Textarea
+			<TextareaAutosize
 				autoComplete="off"
 				dir="auto"
 				value={ value }
