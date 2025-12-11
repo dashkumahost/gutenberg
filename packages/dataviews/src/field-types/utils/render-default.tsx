@@ -12,5 +12,5 @@ export default function render( {
 		return <RenderFromElements item={ item } field={ field } />;
 	}
 
-	return field.formatValue( item, field );
+	return field.getValueFormatted( item, field );
 }

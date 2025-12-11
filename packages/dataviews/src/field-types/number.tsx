@@ -34,7 +34,10 @@ const format = {
 	decimals: 2,
 };
 
-function formatValue< Item >( item: Item, field: NormalizedField< Item > ) {
+function getValueFormatted< Item >(
+	item: Item,
+	field: NormalizedField< Item >
+) {
 	let value = field.getValue( { item } );
 	if ( value === null || value === undefined ) {
 		return '';
@@ -109,7 +112,7 @@ export default {
 		OPERATOR_IS_NOT_ALL,
 	],
 	format,
-	formatValue,
+	getValueFormatted,
 	validate: {
 		required: isValidRequired,
 		min: isValidMin,

@@ -19,7 +19,7 @@ export default {
 	defaultOperators: [],
 	validOperators: [],
 	format: {},
-	formatValue: ( item, field ) =>
+	getValueFormatted: ( item, field ) =>
 		field.getValue( { item } ) ? '••••••••' : '',
 	validate: {
 		required: isValidRequired,

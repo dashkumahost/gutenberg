@@ -215,7 +215,7 @@ export default function Filter( {
 	} else if ( filterInView?.value !== undefined ) {
 		const label =
 			field !== undefined
-				? field.formatValue(
+				? field.getValueFormatted(
 						{ [ field.id ]: filterInView.value },
 						field
 				  )

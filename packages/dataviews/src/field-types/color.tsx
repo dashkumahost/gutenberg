@@ -26,14 +26,14 @@ import {
 } from '../constants';
 import isValidElements from './utils/is-valid-elements';
 import isValidRequired from './utils/is-valid-required';
-import formatValue from './utils/format-value';
+import getValueFormatted from './utils/get-value-formatted-default';
 
 function render( { item, field }: DataViewRenderFieldProps< any > ) {
 	if ( field.hasElements ) {
 		return <RenderFromElements item={ item } field={ field } />;
 	}
 
-	const value = formatValue( item, field );
+	const value = getValueFormatted( item, field );
 	if ( ! value || ! colord( value ).isValid() ) {
 		return value;
 	}
@@ -112,7 +112,7 @@ export default {
 		OPERATOR_IS_NONE,
 	],
 	format: {},
-	formatValue,
+	getValueFormatted,
 	validate: {
 		required: isValidRequired,
 		elements: isValidElements,

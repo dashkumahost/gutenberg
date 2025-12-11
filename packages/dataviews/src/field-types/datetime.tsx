@@ -18,7 +18,10 @@ import {
 import isValidRequired from './utils/is-valid-required';
 import render from './utils/render-default';
 
-function formatValue< Item >( item: Item, field: NormalizedField< Item > ) {
+function getValueFormatted< Item >(
+	item: Item,
+	field: NormalizedField< Item >
+) {
 	const value = field.getValue( { item } );
 	if ( [ '', undefined, null ].includes( value ) ) {
 		return null;
@@ -67,7 +70,7 @@ export default {
 		OPERATOR_OVER,
 	],
 	format: {},
-	formatValue,
+	getValueFormatted,
 	validate: {
 		required: isValidRequired,
 		elements: isValidElements,

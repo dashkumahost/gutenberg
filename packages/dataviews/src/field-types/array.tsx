@@ -21,14 +21,17 @@ import {
 import isValidRequiredForArray from './utils/is-valid-required-for-array';
 import isValidElements from './utils/is-valid-elements';
 
-function formatValue< Item >( item: Item, field: NormalizedField< Item > ) {
+function getValueFormatted< Item >(
+	item: Item,
+	field: NormalizedField< Item >
+) {
 	const value = field.getValue( { item } );
 	const arr = Array.isArray( value ) ? value : [];
 	return arr.join( ', ' );
 }
 
 function render( { item, field }: DataViewRenderFieldProps< any > ) {
-	return formatValue( item, field );
+	return getValueFormatted( item, field );
 }
 
 function isValidCustom< Item >( item: Item, field: NormalizedField< Item > ) {
@@ -81,7 +84,7 @@ export default {
 		OPERATOR_IS_NOT_ALL,
 	],
 	format: {},
-	formatValue,
+	getValueFormatted,
 	validate: {
 		required: isValidRequiredForArray,
 		elements: isValidElements,

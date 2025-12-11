@@ -28,7 +28,10 @@ const format = {
 	weekStartsOn: getSettings().l10n.startOfWeek,
 };
 
-function formatValue< Item >( item: Item, field: NormalizedField< Item > ) {
+function getValueFormatted< Item >(
+	item: Item,
+	field: NormalizedField< Item >
+) {
 	const value = field.getValue( { item } );
 	if ( ! value ) {
 		return '';
@@ -81,7 +84,7 @@ export default {
 		OPERATOR_BETWEEN,
 	],
 	format,
-	formatValue,
+	getValueFormatted,
 	validate: {
 		required: isValidRequired,
 		elements: isValidElements,

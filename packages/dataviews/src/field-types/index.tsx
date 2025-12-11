@@ -112,7 +112,8 @@ export default function normalizeFields< Item >(
 				fieldType.validOperators
 			),
 			format: getFormat( field, fieldType ),
-			formatValue: field.formatValue ?? fieldType.formatValue,
+			getValueFormatted:
+				field.getValueFormatted ?? fieldType.getValueFormatted,
 		};
 	} );
 }

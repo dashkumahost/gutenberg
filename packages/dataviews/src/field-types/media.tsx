@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import type { FieldType } from '../types/private';
-import formatValue from './utils/format-value';
+import getValueFormatted from './utils/get-value-formatted-default';
 
 export default {
 	type: 'media',
@@ -14,7 +14,7 @@ export default {
 	defaultOperators: [],
 	validOperators: [],
 	format: {},
-	formatValue,
+	getValueFormatted,
 	// cannot validate any constraint, so
 	// the only available validation for the field author
 	// would be providing a custom validator.

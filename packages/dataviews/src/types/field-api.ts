@@ -278,7 +278,7 @@ export type Field< Item > = {
 	/**
 	 * Callback used to format the value of the field for display.
 	 */
-	formatValue?: ( item: Item, field: NormalizedField< Item > ) => any;
+	getValueFormatted?: ( item: Item, field: NormalizedField< Item > ) => any;
 };
 
 /**
@@ -339,10 +339,11 @@ export type NormalizedField< Item > = Omit<
 	filterBy: Required< FilterByConfig > | false;
 	readOnly: boolean;
 	format:
+		| {}
 		| Required< FormatDate >
 		| Required< FormatInteger >
 		| Required< FormatNumber >;
-	formatValue: ( value: any, field: NormalizedField< Item > ) => any;
+	getValueFormatted: ( value: any, field: NormalizedField< Item > ) => any;
 };
 
 /**

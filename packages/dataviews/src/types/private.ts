@@ -18,7 +18,7 @@ export type FieldType< Item > = Pick<
 	| 'enableSorting'
 	| 'enableGlobalSearch'
 	| 'format'
-	| 'formatValue'
+	| 'getValueFormatted'
 > & {
 	Edit: string | null;
 	validOperators: Operator[];
