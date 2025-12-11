@@ -1,16 +1,4 @@
-/**
- * External dependencies
- */
 import { type Meta, type StoryObj } from '@storybook/react';
-
-/**
- * WordPress dependencies
- */
-import '@wordpress/theme/design-tokens.css';
-
-/**
- * Internal dependencies
- */
 import { Box } from '../box';
 
 const meta: Meta< typeof Box > = {
