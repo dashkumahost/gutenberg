@@ -20,6 +20,7 @@ import {
 } from '../constants';
 import isValidRequiredForArray from './utils/is-valid-required-for-array';
 import isValidElements from './utils/is-valid-elements';
+import getFormat from './utils/get-format-empty';
 
 function formatValue< Item >( item: Item, field: NormalizedField< Item > ) {
 	const value = field.getValue( { item } );
@@ -80,7 +81,7 @@ export default {
 		OPERATOR_IS_ALL,
 		OPERATOR_IS_NOT_ALL,
 	],
-	getFormat: () => ( {} ),
+	getFormat,
 	formatValue,
 	validate: {
 		required: isValidRequiredForArray,

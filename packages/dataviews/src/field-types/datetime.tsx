@@ -17,6 +17,7 @@ import {
 } from '../constants';
 import isValidRequired from './utils/is-valid-required';
 import render from './utils/render-default';
+import getFormat from './utils/get-format-empty';
 
 function formatValue< Item >( item: Item, field: NormalizedField< Item > ) {
 	const value = field.getValue( { item } );
@@ -66,7 +67,7 @@ export default {
 		OPERATOR_IN_THE_PAST,
 		OPERATOR_OVER,
 	],
-	getFormat: () => ( {} ),
+	getFormat,
 	formatValue,
 	validate: {
 		required: isValidRequired,
